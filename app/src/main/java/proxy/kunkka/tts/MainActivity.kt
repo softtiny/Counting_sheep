@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import proxy.kunkka.tts.ui.theme.TTSGoTheme
 
+import com.github.javiersantos.appupdater.AppUpdater
+
 class MainActivity : ComponentActivity() {
+    //https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +30,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        AppUpdater(this)
+            .setUpdateFrom(UpdateFrom.JSON)
+            .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+            .start();
     }
 }
 
