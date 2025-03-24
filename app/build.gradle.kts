@@ -21,12 +21,12 @@ android {
     }
     signingConfigs {
         create("release") {
-            v1SigningEnabled = true
-            v2SigningEnabled = true
+            enableV1Signing = true
+            enableV2Signing = true
             storeFile = file("./keystore.jks")
            
             val keyPropsFile = file("../key.properties")
-            val keyProps  = new Properties()
+            val keyProps  = Properties()
             keyProps.load(keyPropsFile.inputStream())
 
             storePassword = keyProps.getProperty("storePassword")
