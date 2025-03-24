@@ -19,7 +19,21 @@ android {
             useSupportLibrary = true
         }
     }
+    signingConfigs {
+        config {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeFile file("./keystore.jks")
+           
+           
+            def Properties keyProps  = new Properties()
+            keyProps.load(new FileInputStream(file('../key.properties')))
 
+            storePassword keyProps["storePassword"]
+            keyAlias keyProps["keyAlias"]
+            keyPassword "keyPassword"
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false

@@ -1,0 +1,48 @@
+name: Counting Sheep
+env:
+  # The name of the main module repository
+  main_project_module: app
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        id: check
+        uses: actions/checkout@v3
+      # Set Current Date As Env Variable
+      - name: Set current date as env variable
+        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      # Set Repository Name As Env Variable
+      - name: Set repository name as env variable
+        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+          cache: 'gradle'
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      - name: Decode keystore and create jks and properties file for signing the app
+        run: |
+          echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/keystore.jks
+          echo "storeFile=keystore.jks" >> key.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+        env:
+          PLAY_STORE_UPLOAD_KEY: ${{ secrets.JKSFILE }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.JKS_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.JKS_PASS }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.JKS_PASS }}
+      # Create APK Release
+      - name: Build apk release project (APK)
+        run: ./gradlew assemble
+      - name: Upload APK Release
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.date_today }}APK(s) release generated
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/
