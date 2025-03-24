@@ -40,7 +40,7 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.JKS_PASS }}
       # Create APK Release
       - name: Build apk release project (APK)
-        run: ./gradlew assemble
+        run: ./gradlew assemble --warning-mode=all
       - name: Upload APK Release
         uses: actions/upload-artifact@v4
         with:
