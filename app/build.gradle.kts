@@ -20,23 +20,23 @@ android {
         }
     }
     signingConfigs {
-        config {
+        create("release") {
             v1SigningEnabled = true
             v2SigningEnabled = true
             storeFile = file("./keystore.jks")
            
-           
-            def Properties keyProps  = new Properties()
-            keyProps.load(new FileInputStream(file('../key.properties')))
+            val keyPropsFile = file("../key.properties")
+            val keyProps  = new Properties()
+            keyProps.load(keyPropsFile.inputStream())
 
-            storePassword = keyProps["storePassword"]
-            keyAlias = keyProps["keyAlias"]
-            keyPassword = "keyPassword"
+            storePassword = keyProps.getProperty("storePassword")
+            keyAlias = keyProps.getProperty("keyAlias")
+            keyPassword = keyProps.getProperty("keyPassword")
         }
     }
     buildTypes {
         release {
-            signingConfig = signingConfigs.config
+             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
