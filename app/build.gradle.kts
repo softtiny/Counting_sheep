@@ -21,21 +21,22 @@ android {
     }
     signingConfigs {
         config {
-            v1SigningEnabled true
-            v2SigningEnabled true
-            storeFile file("./keystore.jks")
+            v1SigningEnabled = true
+            v2SigningEnabled = true
+            storeFile = file("./keystore.jks")
            
            
             def Properties keyProps  = new Properties()
             keyProps.load(new FileInputStream(file('../key.properties')))
 
-            storePassword keyProps["storePassword"]
-            keyAlias keyProps["keyAlias"]
-            keyPassword "keyPassword"
+            storePassword = keyProps["storePassword"]
+            keyAlias = keyProps["keyAlias"]
+            keyPassword = "keyPassword"
         }
     }
     buildTypes {
         release {
+            signingConfig = signingConfigs.config
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
