@@ -24,6 +24,9 @@ import proxy.kunkka.tts.ui.theme.TTSGoTheme
 
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
+import android.speech.tts.TextToSpeech
+import androidx.compose.foundation.layout.Arrangement
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
