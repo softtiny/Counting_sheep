@@ -33,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import java.util.Locale
+import android.widget.Toast
 
 class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
@@ -68,10 +69,17 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        AppUpdater(this)
-            .setUpdateFrom(UpdateFrom.JSON)
-            .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-            .start();
+        try {
+            AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.JSON)
+                .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+                .start()
+        } catch (e: Exception) {
+            // Log the error
+            e.printStackTrace()
+            // Show a toast message with error information
+            Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
     private fun speakNumbers() {
         for (i in 1..200) {
