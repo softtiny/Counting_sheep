@@ -82,12 +82,12 @@ class MainActivity : ComponentActivity() {
         }
     }
     private fun speakNumbers() {
-        for (i in 1..200) {
+        for (i in 21111..91111) {
             textToSpeech.speak(
                 i.toString(),
                 TextToSpeech.QUEUE_ADD,
                 null,
-                "number_$i"
+                "$i"
             )
         }
     }
