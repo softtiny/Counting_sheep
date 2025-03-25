@@ -105,5 +105,5 @@ dependencies {
         exclude(module = "support-v4")
     }
 
-    implementation("org.json:json:20210307")
+    implementation("org.json:json:20250107")
 }
