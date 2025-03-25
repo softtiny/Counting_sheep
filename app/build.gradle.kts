@@ -104,6 +104,4 @@ dependencies {
         exclude(module = "appcompat-v7")
         exclude(module = "support-v4")
     }
-
-    implementation("org.json:json:20250107")
 }

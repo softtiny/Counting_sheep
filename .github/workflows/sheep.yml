@@ -46,7 +46,7 @@ jobs:
           curl -L https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json -o old-update.json
           python build.py
           cat update.json
-          ./gradlew clean build assemble --warning-mode=all
+          ./gradlew assemble --warning-mode=all
       - name: Upload APK Release
         uses: actions/upload-artifact@v4
         with:
