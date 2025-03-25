@@ -85,5 +85,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.github.javiersantos:AppUpdater:2.7")
+    implementation("com.github.javiersantos:AppUpdater:2.7") {
+        exclude(group = "com.android.support")
+        exclude(module = "appcompat-v7")
+        exclude(module = "support-v4")
+    }
 }
