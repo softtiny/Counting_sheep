@@ -60,6 +60,21 @@ class MainActivity : ComponentActivity() {
             .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
             .start();
     }
+    private fun speakNumbers() {
+        for (i in 1..200) {
+            textToSpeech.speak(
+                i.toString(),
+                TextToSpeech.QUEUE_ADD,
+                null,
+                "number_$i"
+            )
+        }
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        textToSpeech.shutdown()
+    }
 }
 
 @Composable
