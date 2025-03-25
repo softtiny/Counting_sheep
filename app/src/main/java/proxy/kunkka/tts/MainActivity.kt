@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import proxy.kunkka.tts.ui.theme.TTSGoTheme
 
 import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 
 class MainActivity : ComponentActivity() {
     //https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json
