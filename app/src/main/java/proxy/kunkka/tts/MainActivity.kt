@@ -26,11 +26,18 @@ import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
     private var availableLanguages: List<Locale> = emptyList()
+    private var selectedLanguage: Locale? = null
     //https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +47,7 @@ class MainActivity : ComponentActivity() {
         textToSpeech = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 availableLanguages = textToSpeech.availableLanguages.toList()
+                selectedLanguage = textToSpeech.language // Get current language
                 // Force recomposition to update the UI
                 setContent {
                     TTSGoTheme {
@@ -47,6 +55,11 @@ class MainActivity : ComponentActivity() {
                             TTSContent(
                                 modifier = Modifier.padding(innerPadding),
                                 languages = availableLanguages,
+                                selectedLanguage = selectedLanguage,
+                                onLanguageSelected = { locale ->
+                                    selectedLanguage = locale
+                                    textToSpeech.language = locale
+                                },
                                 onSpeak = { speakNumbers() }
                             )
                         }
@@ -81,6 +94,8 @@ class MainActivity : ComponentActivity() {
 fun TTSContent(
     modifier: Modifier = Modifier,
     languages: List<Locale>,
+    selectedLanguage: Locale?,
+    onLanguageSelected: (Locale) -> Unit,
     onSpeak: () -> Unit
 ) {
     Column(
@@ -93,34 +108,59 @@ fun TTSContent(
         }
 
         Text(
-            text = "Available Languages:",
+            text = "Select Language:",
             style = MaterialTheme.typography.titleMedium
         )
 
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        LanguageSelector(
+            languages = languages,
+            selectedLanguage = selectedLanguage,
+            onLanguageSelected = onLanguageSelected
+        )
+    }
+}
+
+@Composable
+fun LanguageSelector(
+    languages: List<Locale>,
+    selectedLanguage: Locale?,
+    onLanguageSelected: (Locale) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
-            items(languages) { locale ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = locale.displayLanguage,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Text(
-                            text = locale.displayCountry,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+            Button(
+                onClick = { expanded = true },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = selectedLanguage?.displayName ?: "Select a language"
+                )
+            }
+            
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.fillMaxWidth(0.9f)
+            ) {
+                languages.forEach { locale ->
+                    DropdownMenuItem(
+                        text = { 
+                            Text("${locale.displayLanguage} (${locale.displayCountry})") 
+                        },
+                        onClick = {
+                            onLanguageSelected(locale)
+                            expanded = false
+                        }
+                    )
                 }
             }
         }
