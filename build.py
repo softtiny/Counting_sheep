@@ -9,4 +9,4 @@ data['latestVersionCode'] +=1
 data['url']='https://github.com/softtiny/Counting_sheep/releases/latest/download/' + data['latestVersion'] + ".apk"
 
 with open("./update.json","w+") as update:
-    json.dump(data)
+    json.dump(data,update)
