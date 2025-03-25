@@ -1,8 +1,22 @@
 import java.util.Properties
+import org.json.JSONObject
+import java.io.File
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+}
+// Read version information from update.json
+val updateJsonFile = File("${project.rootDir}/update.json")
+val versionInfo = if (updateJsonFile.exists()) {
+    val jsonContent = updateJsonFile.readText()
+    val jsonObject = JSONObject(jsonContent)
+    mapOf(
+        "versionCode" to (jsonObject.optInt("latestVersionCode") ?: 1),
+        "versionName" to (jsonObject.optString("latestVersion") ?: "1.0")
+    )
+} else {
+    mapOf("versionCode" to 1, "versionName" to "1.0")
 }
 
 android {
@@ -13,8 +27,8 @@ android {
         applicationId = "proxy.kunkka.tts"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = versionInfo["versionCode"] as Int
+        versionName = versionInfo["versionName"] as String
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

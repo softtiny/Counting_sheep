@@ -36,8 +36,8 @@ import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
-    private var availableLanguages: List<Locale> = emptyList()
-    private var selectedLanguage: Locale? = null
+    private var availableLanguages = mutableStateOf<List<Locale>>(emptyList())
+    private var selectedLanguage = mutableStateOf<Locale?>(null)
     //https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +46,18 @@ class MainActivity : ComponentActivity() {
         // Initialize TTS
         textToSpeech = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                availableLanguages = textToSpeech.availableLanguages.toList()
-                selectedLanguage = textToSpeech.language // Get current language
-                // Force recomposition to update the UI
+                availableLanguages.value = textToSpeech.availableLanguages.toList()
+                selectedLanguage.value = textToSpeech.language // Get current language
+                // Set content after TTS initialization
                 setContent {
                     TTSGoTheme {
                         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                             TTSContent(
                                 modifier = Modifier.padding(innerPadding),
-                                languages = availableLanguages,
-                                selectedLanguage = selectedLanguage,
+                                languages = availableLanguages.value,
+                                selectedLanguage = selectedLanguage.value,
                                 onLanguageSelected = { locale ->
-                                    selectedLanguage = locale
+                                    selectedLanguage.value = locale
                                     textToSpeech.language = locale
                                 },
                                 onSpeak = { speakNumbers() }

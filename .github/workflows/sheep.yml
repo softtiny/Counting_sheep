@@ -42,7 +42,11 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.JKS_PASS }}
       # Create APK Release
       - name: Build apk release project (APK)
-        run: ./gradlew assemble --warning-mode=all
+        run: |
+          curl -v https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json -o old-update.json
+          python build.py
+          cat update.json
+          ./gradlew assemble --warning-mode=all
       - name: Upload APK Release
         uses: actions/upload-artifact@v4
         with:
