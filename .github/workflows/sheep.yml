@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: checkout
         id: check
@@ -47,8 +49,22 @@ jobs:
           python build.py
           cat update.json
           ./gradlew assemble --warning-mode=all
+      - name: Make Release Data
+        run: |
+          info=`python -c 'import json;update=open("./update.json");data=json.load(update);update.close();print(data["latestVersion"]+".apk")'`
+          cp ${{ env.main_project_module }}/build/outputs/apk/release/app-release.apk $info
+          cp update.json update-changelog.json
+          echo "release_apkname=$info" >> $GITHUB_ENV
       - name: Upload APK Release
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }}APK(s) release generated
           path: ${{ env.main_project_module }}/build/outputs/apk/release/
+      - name: Release EVERY onE
+        uses: softprops/action-gh-release@v2
+        with:
+          make_latest: true
+          tag_name: v1.0.x
+          files: |
+            ${{ env.release_apkname }}
+            update-changelog.json
