@@ -62,8 +62,10 @@ class MainActivity : ComponentActivity() {
 
         try {
             AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.JSON)
-                .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("softtiny", "Counting_sheep")
+                //.setUpdateFrom(UpdateFrom.JSON)
+                //.setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
                 .start()
         } catch (e: Exception) {
             // Log the error
