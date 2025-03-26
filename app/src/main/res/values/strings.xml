@@ -1,3 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">TTS go</string>
+    <string name="app_name">Counting Sheep</string>
+    <string name="title_activity_main">Counting Sheep</string>
+    <string name="package_name">proxy.kunkka.tts</string>
+    <string name="custom_url_scheme">proxy.kunkka.tts</string>
 </resources>

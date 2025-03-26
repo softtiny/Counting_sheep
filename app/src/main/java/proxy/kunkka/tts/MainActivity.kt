@@ -74,12 +74,10 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-    private fun startSpeaking(onStart: () -> Unit, onError: () -> Unit, onFinish: () -> Unit) {
+    private fun startSpeaking(start: Int, end: Int, onStart: () -> Unit, onError: () -> Unit, onFinish: () -> Unit) {
         speechJob?.cancel()
         speechJob = CoroutineScope(Dispatchers.Default).launch {
             onStart()
-            val start = 41111
-            val end = 999999
              for (i in start..end) {
                 if (isActive) { // Check if coroutine is still active
                     val numberStr = i.toString()
@@ -122,7 +120,8 @@ class MainActivity : ComponentActivity() {
     ) {
         var isSpeaking by remember { mutableStateOf(false) }
         var currentNumber by remember { mutableStateOf("Not started") }
-
+        var startRange by remember { mutableStateOf("45678") } // User input for start
+        var endRange by remember { mutableStateOf("999999") }   // User input for end
         /// Setup TTS listener
         LaunchedEffect(Unit) {
             textToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
@@ -153,17 +152,26 @@ class MainActivity : ComponentActivity() {
             Button(
                 onClick =  {
                     if (!isSpeaking) {
-                        startSpeaking(
-                            onStart = { isSpeaking = true },
-                            onError = { currentNumber = "TTS Error" },
-                            onFinish = {
-                                currentNumber = "Finished"
-                                isSpeaking = false
-                            }
-                        )
+                        val start = startRange.toIntOrNull() ?: return@Button
+                        val end = endRange.toIntOrNull() ?: return@Button
+                        if (start <= end) {
+                            startSpeaking(
+                                start = start,
+                                end = end,
+                                onStart = { isSpeaking = true },
+                                onError = { currentNumber = "TTS Error" },
+                                onFinish = {
+                                    currentNumber = "Finished"
+                                    isSpeaking = false
+                                }
+                            )
+                        } else {
+                            currentNumber="error!"
+                        }
+                        
                     }
                 },
-                enabled = !isSpeaking
+                enabled = !isSpeaking && startRange.isNotEmpty() && endRange.isNotEmpty()
             ) {
                 
                 Text("Start Counting")
