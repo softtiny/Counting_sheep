@@ -198,6 +198,25 @@ class MainActivity : ComponentActivity() {
             ) {
                 Text("Stop Speaking")
             }
+             // Start Range Input
+            OutlinedTextField(
+                value = startRange,
+                onValueChange = { startRange = it.filter { char -> char.isDigit() } },
+                label = { Text("Start Range") },
+                modifier = Modifier.fillMaxWidth(0.8f),
+                enabled = !isSpeaking
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // End Range Input
+            OutlinedTextField(
+                value = endRange,
+                onValueChange = { endRange = it.filter { char -> char.isDigit() } },
+                label = { Text("End Range") },
+                modifier = Modifier.fillMaxWidth(0.8f),
+                enabled = !isSpeaking
+            )
         }
     }
 
