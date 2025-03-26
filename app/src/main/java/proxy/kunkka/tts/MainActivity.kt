@@ -25,6 +25,7 @@ import proxy.kunkka.tts.ui.theme.TTSGoTheme
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -34,11 +35,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import java.util.Locale
 import android.widget.Toast
+import kotlinx.coroutines.*
 
 class MainActivity : ComponentActivity() {
     private lateinit var textToSpeech: TextToSpeech
     private var availableLanguages = mutableStateOf<List<Locale>>(emptyList())
     private var selectedLanguage = mutableStateOf<Locale?>(null)
+    private var speechJob: Job? = null
     //https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +63,7 @@ class MainActivity : ComponentActivity() {
                                 onLanguageSelected = { locale ->
                                     selectedLanguage.value = locale
                                     textToSpeech.language = locale
-                                },
-                                onSpeak = { speakNumbers() }
+                                }
                             )
                         }
                     }
@@ -81,51 +83,125 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-    private fun speakNumbers() {
-        for (i in 21111..91111) {
-            textToSpeech.speak(
-                i.toString(),
-                TextToSpeech.QUEUE_ADD,
-                null,
-                "$i"
-            )
+    private fun startSpeaking(onStart: () -> Unit, onError: () -> Unit, onFinish: () -> Unit) {
+        speechJob?.cancel()
+        speechJob = CoroutineScope(Dispatchers.Default).launch {
+            onStart()
+            val start = 41111
+            val end = 999999
+             for (i in start..end) {
+                if (isActive) { // Check if coroutine is still active
+                    val numberStr = i.toString()
+                    val result = textToSpeech.speak(numberStr, TextToSpeech.QUEUE_ADD, null, numberStr)
+                    if (result == TextToSpeech.ERROR) {
+                        withContext(Dispatchers.Main) { onError() }
+                        break
+                    }
+                    delay(2000) // Adjust delay as needed
+                } else {
+                    break
+                }
+            }
+            if (isActive) {
+                withContext(Dispatchers.Main) { onFinish() }
+            }
         }
+    }
+     private fun stopSpeaking() {
+        textToSpeech.stop()
+        speechJob?.cancel()
     }
     
     override fun onDestroy() {
+         if (::textToSpeech.isInitialized) {
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+        speechJob?.cancel()
         super.onDestroy()
-        textToSpeech.shutdown()
     }
-}
 
-@Composable
-fun TTSContent(
-    modifier: Modifier = Modifier,
-    languages: List<Locale>,
-    selectedLanguage: Locale?,
-    onLanguageSelected: (Locale) -> Unit,
-    onSpeak: () -> Unit
-) {
-    Column(
-        modifier = modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+
+    @Composable
+    fun TTSContent(
+        modifier: Modifier = Modifier,
+        languages: List<Locale>,
+        selectedLanguage: Locale?,
+        onLanguageSelected: (Locale) -> Unit,
     ) {
-        Button(onClick = onSpeak) {
-            Text("Start Counting")
+        var isSpeaking by remember { mutableStateOf(false) }
+        var currentNumber by remember { mutableStateOf("Not started") }
+
+        /// Setup TTS listener
+        LaunchedEffect(Unit) {
+            textToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                override fun onStart(utteranceId: String?) {
+                    utteranceId?.let { currentNumber = "Speaking: $it" }
+                }
+
+                override fun onDone(utteranceId: String?) {
+                    // Optional: Handle completion of each utterance
+                }
+
+                override fun onError(utteranceId: String?) {
+                    currentNumber = "Error occurred"
+                }
+            })
         }
 
-        Text(
-            text = "Select Language:",
-            style = MaterialTheme.typography.titleMedium
-        )
+        Column(
+            modifier = modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                    text = currentNumber,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            Button(
+                onClick =  {
+                    if (!isSpeaking) {
+                        startSpeaking(
+                            onStart = { isSpeaking = true },
+                            onError = { currentNumber = "TTS Error" },
+                            onFinish = {
+                                currentNumber = "Finished"
+                                isSpeaking = false
+                            }
+                        )
+                    }
+                },
+                enabled = !isSpeaking
+            ) {
+                
+                Text("Start Counting")
+            }
 
-        LanguageSelector(
-            languages = languages,
-            selectedLanguage = selectedLanguage,
-            onLanguageSelected = onLanguageSelected
-        )
+            Text(
+                text = "Select Language:",
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            LanguageSelector(
+                languages = languages,
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = onLanguageSelected
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    stopSpeaking()
+                    isSpeaking = false
+                    currentNumber = "Stopped"
+                },
+                enabled = isSpeaking
+            ) {
+                Text("Stop Speaking")
+            }
+        }
     }
+
 }
 
 @Composable
