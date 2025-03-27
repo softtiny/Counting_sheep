@@ -79,17 +79,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    testOptions {
-        unitTests.all {
-            testLogging {
-                events("passed", "skipped", "failed")
-                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-                showStandardStreams = true
-            }
-            afterTest { desc, result ->
-                println("Test ${desc.name} [${desc.className}] - ${result.resultType}")
-            }
-        }
+
+}
+
+tasks.withType<Test> {
+    testLogging {
+        events("passed", "skipped", "failed")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        showStandardStreams = true
+    }
+    afterTest { desc, result ->
+        println("Test ${desc.name} [${desc.className}] - ${result.resultType}")
     }
 }
 
