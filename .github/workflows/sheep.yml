@@ -4,8 +4,8 @@ env:
   main_project_module: app
 on:
   workflow_dispatch:
-  push:
-    branches: [ main, master ]
+  # push:
+  #   branches: [ main, master ]
 
 jobs:
   build:
