@@ -89,7 +89,7 @@ tasks.withType<Test> {
         showStandardStreams = true
     }
     doLast {
-        afterTest { desc: TestDescriptor, result: TestResult ->
+        afterTest(groovy.lang.Closure.IDENTITY) { desc, result ->
             println("Test ${desc.name} [${desc.className}] - ${result.resultType}")
         }
     }
