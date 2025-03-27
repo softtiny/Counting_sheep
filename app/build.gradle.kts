@@ -91,9 +91,7 @@ tasks.withType<Test> {
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         showStandardStreams = true
         afterSuite(object : Closure<Any>(this, this)  { 
-            override fun call(vararg args: Any?) {
-                val desc = args[0] as TestDescriptor
-                val result = args[1] as TestResult
+            fun doCall(desc: TestDescriptor, result: TestResult) {
                 if (desc.parent == null) { // will match the root suite
                     println("Test ${desc.name} - ${result.resultType}")
                 }
