@@ -91,7 +91,7 @@ tasks.withType<Test> {
             if (desc.parent == null) { // will match the root suite
                 println("Test ${desc.name} - ${result.resultType}")
             }
-        }
+        } as Closure<*>
     }
 }
 
