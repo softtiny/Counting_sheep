@@ -88,7 +88,7 @@ tasks.withType<Test> {
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         showStandardStreams = true
     }
-    afterTest { desc, result ->
+    afterTest { desc: TestDescriptor, result: TestResult ->
         println("Test ${desc.name} [${desc.className}] - ${result.resultType}")
     }
 }
