@@ -47,4 +47,5 @@ jobs:
           curl -L https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json -o old-update.json
           python build.py
           cat update.json
-          ./gradlew :app:testDebugUnitTest --tests "ExampleUnitTest"
+          ./gradlew --full-stacktrace :app:testDebugUnitTest --tests "ExampleUnitTest"
+          ./gradlew --full-stacktrace :app:testReleaseUnitTest --tests "ExampleUnitTest"
