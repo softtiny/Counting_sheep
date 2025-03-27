@@ -87,7 +87,7 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         showStandardStreams = true
-        afterSuite { desc, result ->
+        afterSuite { desc: org.gradle.api.tasks.testing.TestDescriptor, result: org.gradle.api.tasks.testing.TestResult ->
             if (desc.parent == null) { // will match the root suite
                 println("Test ${desc.name} - ${result.resultType}")
             }
