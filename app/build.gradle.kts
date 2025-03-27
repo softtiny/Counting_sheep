@@ -1,6 +1,9 @@
 import java.util.Properties
 import org.json.JSONObject
 import java.io.File
+import org.gradle.api.tasks.testing.TestDescriptor
+import org.gradle.api.tasks.testing.TestResult
+import groovy.lang.Closure
 
 plugins {
     alias(libs.plugins.android.application)
@@ -87,9 +90,13 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         showStandardStreams = true
-        afterSuite(closure  { desc: org.gradle.api.tasks.testing.TestDescriptor, result: org.gradle.api.tasks.testing.TestResult ->
-            if (desc.parent == null) { // will match the root suite
-                println("Test ${desc.name} - ${result.resultType}")
+        afterSuite(object : Closure<Any>(this, this)  { 
+            override fun call(vararg args: Any?) {
+                val desc = args[0] as TestDescriptor
+                val result = args[1] as TestResult
+                if (desc.parent == null) { // will match the root suite
+                    println("Test ${desc.name} - ${result.resultType}")
+                }
             }
         })
     }
