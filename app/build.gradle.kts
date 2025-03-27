@@ -87,10 +87,10 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         showStandardStreams = true
-    }
-    doLast {
-        afterTest(groovy.lang.Closure.IDENTITY) { desc, result ->
-            println("Test ${desc.name} [${desc.className}] - ${result.resultType}")
+        afterSuite { desc, result ->
+            if (desc.parent == null) { // will match the root suite
+                println("Test ${desc.name} - ${result.resultType}")
+            }
         }
     }
 }
