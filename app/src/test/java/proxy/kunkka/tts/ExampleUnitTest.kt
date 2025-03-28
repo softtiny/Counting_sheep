@@ -7,7 +7,7 @@ import java.net.URL
 import java.net.HttpURLConnection
 import java.io.InputStream
 import java.io.BufferedReader
-import java.io.InputStreamRead
+import java.io.InputStreamReader 
 import java.nio.charset.Charset
 
 /**
@@ -22,10 +22,11 @@ class ExampleUnitTest {
     }
     @Test
     fun urlreq_isok(){
-        var inputStream: InputStream!
+        var inputStream: InputStreamReader? = null
         var jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
         var connection = jsonUrl.openConnection() as HttpURLConnection
-        connection.setInstanceFollowRedirects(false)
+        
+        connection.instanceFollowRedirects  = false
         var statusCode = connection.getResponseCode()
         println("Status Code: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
 
@@ -46,15 +47,18 @@ class ExampleUnitTest {
         } else {
             assertEquals(5, 3 + 3)
         }
-        inputStream =  connection.getInputStream()
+        inputStream =  connection.inputStream
         var rd =  BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
         var sb =  StringBuilder()
-        var cp:char!
-        while ((cp = rd.read()) != -1) {
-            sb.append(cp as char)
+        var cp: Int // Use Int for read(), as it returns an Int (-1 for EOF)
+        while (rd.read().also { cp = it } != -1) { // Assign and check in one step
+            sb.append(cp.toChar()) // Convert Int to Char
         }
         var jsonText = sb.toString()
         println("Response body:$jsonText")
 
+        // Clean up resources
+        rd.close()
+        inputStream?.close()
     }
 }
