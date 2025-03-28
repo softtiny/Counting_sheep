@@ -23,10 +23,10 @@ class ExampleUnitTest {
     @Test
     fun urlreq_isok(){
         var inputStream: InputStream? = null
-        val jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-        val connection = jsonUrl.openConnection() as HttpURLConnection
+        var jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+        var connection = jsonUrl.openConnection() as HttpURLConnection
         connection.setInstanceFollowRedirects(false)
-        val statusCode = connection.getResponseCode()
+        var statusCode = connection.getResponseCode()
         println("Status Code: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
 
 
@@ -38,7 +38,7 @@ class ExampleUnitTest {
                     statusCode == 308) {
             assertEquals(5, 2 + 3)
             redirectUrl = connection.getHeaderField("Location")
-            jsonUrl=new URL(redirectUrl)
+            jsonUrl= URL(redirectUrl)
             connection = jsonUrl.openConnection() as HttpURLConnection
             connection.setInstanceFollowRedirects(false)
             statusCode = connection.getResponseCode()
@@ -47,9 +47,9 @@ class ExampleUnitTest {
             assertEquals(5, 3 + 3)
         }
         inputStream =  connection.getInputStream()
-        rd = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")))
-        sb = new StringBuilder()
-        val cp: int?=null
+        rd =  BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+        sb =  StringBuilder()
+        var cp: int?=null
         while ((cp = rd.read()) != -1) {
             sb.append((char) cp)
         }
