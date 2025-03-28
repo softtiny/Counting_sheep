@@ -28,7 +28,7 @@ class ExampleUnitTest {
         
         connection.instanceFollowRedirects  = false
         var statusCode = connection.getResponseCode()
-        println("Status Code: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
+        println("Status Code0: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
 
 
 
@@ -39,11 +39,26 @@ class ExampleUnitTest {
                     statusCode == 308) {
             assertEquals(5, 2 + 3)
             var redirectUrl = connection.getHeaderField("Location")
+            println("redirectUrl1: $redirectUrl");
             jsonUrl= URL(redirectUrl)
             connection = jsonUrl.openConnection() as HttpURLConnection
             connection.setInstanceFollowRedirects(false)
             statusCode = connection.getResponseCode()
-            println("Status Code: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
+            println("Status Code1: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
+            if (statusCode == HttpURLConnection.HTTP_MOVED_TEMP ||
+                    statusCode == HttpURLConnection.HTTP_MOVED_PERM ||
+                    statusCode == HttpURLConnection.HTTP_SEE_OTHER ||
+                    statusCode == 307 ||
+                    statusCode == 308) {
+                assertEquals(5, 2 + 3)
+                var redirectUrl = connection.getHeaderField("Location")
+                println("redirectUrl2: $redirectUrl");
+                jsonUrl= URL(redirectUrl)
+                connection = jsonUrl.openConnection() as HttpURLConnection
+                connection.setInstanceFollowRedirects(false)
+                statusCode = connection.getResponseCode()
+                println("Status Code2: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
+            }
         } else {
             assertEquals(5, 3 + 3)
         }
