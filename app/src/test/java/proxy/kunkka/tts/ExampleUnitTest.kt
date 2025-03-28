@@ -37,7 +37,7 @@ class ExampleUnitTest {
                     statusCode == 307 ||
                     statusCode == 308) {
             assertEquals(5, 2 + 3)
-            redirectUrl = connection.getHeaderField("Location")
+            var redirectUrl = connection.getHeaderField("Location")
             jsonUrl= URL(redirectUrl)
             connection = jsonUrl.openConnection() as HttpURLConnection
             connection.setInstanceFollowRedirects(false)
@@ -46,14 +46,14 @@ class ExampleUnitTest {
         } else {
             assertEquals(5, 3 + 3)
         }
-        inputStream =  connection.getInputStream()
-        rd =  BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
-        sb =  StringBuilder()
+        var inputStream =  connection.getInputStream()
+        var rd =  BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
+        var sb =  StringBuilder()
         var cp: int?=null
         while ((cp = rd.read()) != -1) {
             sb.append((char) cp)
         }
-        jsonText = sb.toString()
+        var jsonText = sb.toString()
         println("Response body:$jsonText")
 
     }
