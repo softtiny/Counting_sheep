@@ -22,7 +22,7 @@ class ExampleUnitTest {
     }
     @Test
     fun urlreq_isok(){
-        var inputStream: InputStream? = null
+        var inputStream: InputStream!
         var jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
         var connection = jsonUrl.openConnection() as HttpURLConnection
         connection.setInstanceFollowRedirects(false)
@@ -46,12 +46,12 @@ class ExampleUnitTest {
         } else {
             assertEquals(5, 3 + 3)
         }
-        var inputStream =  connection.getInputStream()
+        inputStream =  connection.getInputStream()
         var rd =  BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
         var sb =  StringBuilder()
-        var cp: int?=null
+        var cp:char!
         while ((cp = rd.read()) != -1) {
-            sb.append((char) cp)
+            sb.append(cp as char)
         }
         var jsonText = sb.toString()
         println("Response body:$jsonText")
