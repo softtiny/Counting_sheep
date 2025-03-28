@@ -22,6 +22,7 @@ class ExampleUnitTest {
         var inputStream: InputStream? = null
         val jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
         val connection = jsonUrl.openConnection() as HttpURLConnection
+        connection.setInstanceFollowRedirects(false)
         val statusCode = connection.getResponseCode()
          println("Status Code: $statusCode, HTTP_MOVED_TEMP: ${HttpURLConnection.HTTP_MOVED_TEMP}, HTTP_MOVED_PERM: ${HttpURLConnection.HTTP_MOVED_PERM}, HTTP_SEE_OTHER: ${HttpURLConnection.HTTP_SEE_OTHER}")
 
