@@ -22,7 +22,7 @@ class ExampleUnitTest {
     }
     @Test
     fun urlreq_isok(){
-        var inputStream: InputStreamReader? = null
+        var inputStream: InputStream? = null
         var jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
         var connection = jsonUrl.openConnection() as HttpURLConnection
         
