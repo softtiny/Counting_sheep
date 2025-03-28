@@ -3,6 +3,8 @@ package proxy.kunkka.tts
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.net.URL
+import java.net.HttpURLConnection
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,5 +15,21 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(5, 2 + 3)
+    }
+    @Test
+    fun urlreq_isok(){
+        InputStream val inputStream = null
+        jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+        HttpURLConnection val connection = jsonUrl.openConnection()
+        int val statusCode = connection.getResponseCode()
+        if (statusCode == HttpURLConnection.HTTP_MOVED_TEMP ||
+                    statusCode == HttpURLConnection.HTTP_MOVED_PERM ||
+                    statusCode == HttpURLConnection.HTTP_SEE_OTHER ||
+                    statusCode == 307 ||
+                    statusCode == 308) {
+            assertEquals(5, 2 + 3)
+        } else {
+            assertEquals(5, 3 + 3)
+        }
     }
 }
