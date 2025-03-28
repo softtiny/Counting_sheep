@@ -120,7 +120,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.github.softtiny03:AppUpdater:2.7.3") {
+    implementation("com.github.softtiny03:AppUpdater:2.7.5") {
         exclude(group = "com.android.support")
         exclude(module = "appcompat-v7")
         exclude(module = "support-v4")
