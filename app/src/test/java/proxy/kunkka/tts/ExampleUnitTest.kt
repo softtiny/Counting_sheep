@@ -5,6 +5,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import java.net.URL
 import java.net.HttpURLConnection
+import java.io.InputStream
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,9 +19,9 @@ class ExampleUnitTest {
     }
     @Test
     fun urlreq_isok(){
-        InputStream val inputStream = null
-        jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-        HttpURLConnection val connection = jsonUrl.openConnection()
+        var inputStream: InputStream? = null
+        val jsonUrl = URL("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+        val connection = jsonUrl.openConnection() as HttpURLConnection
         int val statusCode = connection.getResponseCode()
         if (statusCode == HttpURLConnection.HTTP_MOVED_TEMP ||
                     statusCode == HttpURLConnection.HTTP_MOVED_PERM ||
