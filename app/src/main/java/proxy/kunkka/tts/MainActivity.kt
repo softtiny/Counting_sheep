@@ -86,7 +86,10 @@ class MainActivity : ComponentActivity() {
                         withContext(Dispatchers.Main) { onError() }
                         break
                     }
-                    delay(2000) // Adjust delay as needed
+                    while (textToSpeech.isSpeaking && isActive) {
+                        delay(100) // Poll every 100ms
+                    }
+                    if (isActive) delay(200)
                 } else {
                     break
                 }
