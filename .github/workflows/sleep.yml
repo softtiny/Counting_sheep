@@ -43,9 +43,12 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Unit Test
+        if: $${{ env.ANDROID_FLUTTER_VERSION == '3.13.9' }}
         run: |
           curl -L https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json -o old-update.json
           python build.py
           cat update.json
           ./gradlew --full-stacktrace :app:testDebugUnitTest --tests "ExampleUnitTest"
           ./gradlew --full-stacktrace :app:testDebugUnitTest --tests "AppUpdateUnitTest"
+      - name: Build and run connectedCheck
+        run: ./gradlew connectedCheck
