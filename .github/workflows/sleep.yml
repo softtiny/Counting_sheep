@@ -48,3 +48,4 @@ jobs:
           python build.py
           cat update.json
           ./gradlew --full-stacktrace :app:testDebugUnitTest --tests "ExampleUnitTest"
+          ./gradlew --full-stacktrace :app:testDebugUnitTest --tests "AppUpdateUnitTest"
