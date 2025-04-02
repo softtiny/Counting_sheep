@@ -68,7 +68,24 @@ jobs:
               emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
               disable-animations: false
               script: echo "Generated AVD snapshot for caching."
-    
+          - name: Decode keystore and create jks and properties file for signing the app
+            run: |
+              echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/keystore.jks
+              echo "storeFile=keystore.jks" >> key.properties
+              echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
+              echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
+              echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+            env:
+              PLAY_STORE_UPLOAD_KEY: ${{ secrets.JKSFILE }}
+              KEYSTORE_KEY_ALIAS: ${{ secrets.JKS_ALIAS }}
+              KEYSTORE_KEY_PASSWORD: ${{ secrets.JKS_PASS }}
+              KEYSTORE_STORE_PASSWORD: ${{ secrets.JKS_PASS }}
+            # Create APK Release
+          - name: Build apk release project (APK)
+            run: |
+              curl -L https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json -o old-update.json
+              python build.py
+              cat update.json
           - name: Run instrumented tests on Android virtual device
             uses: reactivecircus/android-emulator-runner@v2
             with:
