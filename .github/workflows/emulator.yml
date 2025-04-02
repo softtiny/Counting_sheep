@@ -17,7 +17,7 @@ jobs:
         strategy:
           fail-fast: false
           matrix:
-            api-level: [ 33 ]
+            api-level: [ 29 ]
     
         steps:
     
@@ -90,12 +90,7 @@ jobs:
           - name: Run instrumented tests on Android virtual device
             uses: reactivecircus/android-emulator-runner@v2
             with:
-              api-level: ${{ matrix.api-level }}
-              arch: x86_64
-              target: ${{ matrix.api-level >= 30 && 'google_apis' || 'default' }}
-              force-avd-creation: false
-              emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-              disable-animations: true
+              api-level: 29
               script: |
                 chmod +x ./gradlew
                 #./gradlew connectedCheck
