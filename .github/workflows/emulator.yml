@@ -98,5 +98,5 @@ jobs:
               disable-animations: true
               script: |
                 chmod +x ./gradlew
-                ./gradlew connectedCheck
-                #./gradlew assembleAndroidTest
+                #./gradlew connectedCheck
+                ./gradlew assembleAndroidTest
