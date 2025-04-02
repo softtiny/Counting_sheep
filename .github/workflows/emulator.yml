@@ -2,6 +2,7 @@ name: Emulator Test
 env:
   # The name of the main module repository
   main_project_module: app
+  ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 200
 on:
   workflow_dispatch:
   # push:
