@@ -20,5 +20,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("proxy.kunkka.tts", appContext.packageName)
+        println("run Example Instrumented Test use App context ok")
     }
 }
