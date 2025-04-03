@@ -87,7 +87,7 @@ android {
 
 tasks.withType<Test> {
     testLogging {
-        events("passed", "skipped", "failed")
+        events("passed", "skipped", "failed", "standardOut", "standardError")
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         showStandardStreams = true
         afterSuite(object : Closure<Any>(this, this)  { 
