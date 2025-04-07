@@ -13,6 +13,7 @@ import org.junit.Assert.*
 
 
 import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.AppUpdaterUtils
 import com.github.javiersantos.appupdater.enums.UpdateFrom
 
 /**
@@ -64,7 +65,6 @@ class ExampleInstrumentedTest {
             // Log the error
             e.printStackTrace()
             // Show a toast message with error information
-            Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 }
