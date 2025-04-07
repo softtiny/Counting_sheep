@@ -96,7 +96,7 @@ jobs:
                 adb logcat -c 
                 #./gradlew connectedCheck --info
                 ( ./gradlew connectedAndroidTest --info && pkill adb ) & 
-                adb logcat *:V -v time > logcat.txt  
+                (adb logcat *:V -v time > logcat.txt || echo "adb pkill ocurr" )
                 wait
                 #./gradlew assembleAndroidTest
           - name: Upload APK Release
