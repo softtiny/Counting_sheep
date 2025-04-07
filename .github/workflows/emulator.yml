@@ -95,13 +95,13 @@ jobs:
                 chmod +x ./gradlew
                 adb logcat -c 
                 #./gradlew connectedCheck --info
-                ( ./gradlew connectedAndroidTest --info && pkill adb || pkill adb ) & 
-                (adb logcat *:V -v time > logcat.txt || echo "adb pkill ocurr" )
+                ( ./gradlew connectedAndroidTest --info > ./long_log/log_test.txt && pkill adb || pkill adb ) & 
+                (adb logcat *:V -v time > ./long_log/logcat.txt || echo "adb pkill ocurr" )
                 wait
                 #./gradlew assembleAndroidTest
           - name: Upload APK Release
             uses: actions/upload-artifact@v4
             with:
               name: log
-              path: ./logcat.txt
+              path: ./long_log/logcat.txt
                 
