@@ -69,7 +69,7 @@ class ExampleInstrumentedTest {
                                             Log.d("Latest Version Code", update.getLatestVersionCode())
                                             Log.d("Release notes", update.getReleaseNotes())
                                             Log.d("URL", update.getUrlToDownload())
-                                            Log.d("Is update available?", isUpdateAvailable.toString())
+                                            
                                         }
                                         override fun onFailed(error: AppUpdaterError) { 
                                             Log.d("AppUpdater Error", "Something went wrong")
