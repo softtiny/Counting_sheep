@@ -85,7 +85,7 @@ jobs:
           - name: Build apk release project (APK)
             run: |
               curl -L https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json -o old-update.json
-              python build.py
+              python build.py -1
               cat update.json
               mkdir -p long_log
           - name: Run instrumented tests on Android virtual device
