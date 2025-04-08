@@ -61,6 +61,14 @@ class ExampleInstrumentedTest {
             val appUpdaterUtils = AppUpdaterUtils(appContext)
                                     .setUpdateFrom(UpdateFrom.JSON)
                                     .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+                                    .withListener(object: AppUpdaterUtils.UpdateListener {
+                                        override fun onSuccess(update: Update, isUpdateAvailable: Boolean ) {
+
+                                        }
+                                        override fun onFailed(error: AppUpdaterError) { 
+                                            
+                                        }
+                                    })
             Log.i("ExampleInstrumentedTest","run AppUpdater App use context end")
         } catch (e: Exception) {
             // Log the error
