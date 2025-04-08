@@ -54,13 +54,13 @@ class ExampleInstrumentedTest {
         Log.i("ExampleInstrumentedTest","run Example Instrumented Test use App context ok")
         try {
             Log.i("ExampleInstrumentedTest","run AppUpdater App use context")
-            val aa= AppUpdater(appContext)
-            // AppUpdater(appContext)
-            //     //.setUpdateFrom(UpdateFrom.GITHUB)
-            //     //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
+            // val aa= AppUpdater(appContext)
             //     .setUpdateFrom(UpdateFrom.JSON)
             //     .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
             //     .start()
+            val appUpdaterUtils = AppUpdaterUtils(appContext)
+                                    .setUpdateFrom(UpdateFrom.JSON)
+                                    .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
             Log.i("ExampleInstrumentedTest","run AppUpdater App use context end")
         } catch (e: Exception) {
             // Log the error
