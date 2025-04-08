@@ -72,6 +72,7 @@ class ExampleInstrumentedTest {
                                         }
                                     })
                                     .start()
+            Thread.sleep(20000)
             Log.i("ExampleInstrumentedTest","run AppUpdater App use context end")
         } catch (e: Exception) {
             // Log the error
