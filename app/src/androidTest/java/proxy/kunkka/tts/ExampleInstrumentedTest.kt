@@ -15,6 +15,8 @@ import org.junit.Assert.*
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.AppUpdaterUtils
 import com.github.javiersantos.appupdater.enums.UpdateFrom
+import com.github.javiersantos.appupdater.objects.Update
+import com.github.javiersantos.appupdater.enums.AppUpdaterError
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -63,12 +65,13 @@ class ExampleInstrumentedTest {
                                     .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
                                     .withListener(object: AppUpdaterUtils.UpdateListener {
                                         override fun onSuccess(update: Update, isUpdateAvailable: Boolean ) {
-
+                                            Log.d("Latest Version", update.getLatestVersion())
                                         }
                                         override fun onFailed(error: AppUpdaterError) { 
-                                            
+                                            Log.d("AppUpdater Error", "Something went wrong")
                                         }
                                     })
+                                    .start()
             Log.i("ExampleInstrumentedTest","run AppUpdater App use context end")
         } catch (e: Exception) {
             // Log the error
