@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         checkUpdate()
         
     }
-    private fun checkUpdate(){
+    fun checkUpdate(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 AppUpdater(this@MainActivity)
