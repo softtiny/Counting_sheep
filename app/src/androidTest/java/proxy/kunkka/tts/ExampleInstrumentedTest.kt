@@ -66,9 +66,7 @@ class ExampleInstrumentedTest {
                                     .withListener(object: AppUpdaterUtils.UpdateListener {
                                         override fun onSuccess(update: Update, isUpdateAvailable: Boolean ) {
                                             Log.d("Latest Version", update.getLatestVersion())
-                                            Log.d("Latest Version Code", update.getLatestVersionCode())
-                                            Log.d("Release notes", update.getReleaseNotes())
-                                            Log.d("URL", update.getUrlToDownload())
+                                          
                                             
                                         }
                                         override fun onFailed(error: AppUpdaterError) { 
