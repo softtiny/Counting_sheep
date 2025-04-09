@@ -30,6 +30,7 @@ class ExampleInstrumentedTest {
         Log.i("ExampleInstrumentedTest","run useAppUpdate use context start")
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val aa= AppUpdater(appContext)
+            .setDisplay(Display.NOTIFICATION)
             .setUpdateFrom(UpdateFrom.JSON)
             .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
             .start()

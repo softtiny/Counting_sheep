@@ -59,19 +59,24 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        try {
-            AppUpdater(this)
-                //.setUpdateFrom(UpdateFrom.GITHUB)
-                //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
-                .setUpdateFrom(UpdateFrom.JSON)
-                .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-                .start()
-        } catch (e: Exception) {
-            // Log the error
-            e.printStackTrace()
-            // Show a toast message with error information
-            Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
+        checkUpdate()
+        
+    }
+    private fun checkUpdate(){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                AppUpdater(this@MainActivity)
+                    //.setUpdateFrom(UpdateFrom.GITHUB)
+                    //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
+                    .setUpdateFrom(UpdateFrom.JSON)
+                    .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+                    .start()
+            } catch (e: Exception) {
+                // Log the error
+                //e.printStackTrace()
+                // Show a toast message with error information
+                Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
     private fun startSpeaking(start: Int, end: Int, onStart: () -> Unit, onError: () -> Unit, onFinish: () -> Unit) {
