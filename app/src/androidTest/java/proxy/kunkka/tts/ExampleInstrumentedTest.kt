@@ -25,28 +25,17 @@ import com.github.javiersantos.appupdater.enums.AppUpdaterError
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    // @Test 
-    // fun useAppUpdate() {
-    //     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    //     val appUpdaterUtils = AppUpdaterUtils(appContext)
-    //         .setUpdateFrom(UpdateFrom.JSON)
-    //         .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-    //         .withListener(object: AppUpdaterUtils.UpdateListener {
-    //             override fun onSuccess(update: Update, isUpdateAvailable: Boolean ) {
-    //                 Log.d("Latest Version", update.getLatestVersion())
-    //                 Log.d("Latest Version Code", update.getLatestVersionCode())
-    //                 Log.d("Release notes", update.getReleaseNotes())
-    //                 Log.d("URL", update.getUrlToDownload())
-    //                 Log.d("Is update available?", isUpdateAvailable.toString())
-    //             }
-                
-    //             override fun onFailed(error: AppUpdaterError) {
-    //                 Log.d("AppUpdater Error", "Something went wrong")
-    //             }
-    //         })
-    //         .start()
-    //     Log.i("ExampleInstrumentedTest","run useAppUpdate use context end")
-    // }
+    @Test 
+    fun useAppUpdate() {
+        Log.i("ExampleInstrumentedTest","run useAppUpdate use context start")
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val aa= AppUpdater(appContext)
+            .setUpdateFrom(UpdateFrom.JSON)
+            .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+            .start()
+        Thread.sleep(20000)
+        Log.i("ExampleInstrumentedTest","run useAppUpdate use context end")
+    }
     @Test
     fun useAppContext() {
         Log.i("ExampleInstrumentedTest", "run Example Instrumented Test use App context start")
