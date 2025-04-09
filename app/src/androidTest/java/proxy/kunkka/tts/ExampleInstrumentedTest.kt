@@ -27,27 +27,28 @@ import kotlinx.coroutines.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    @Test useJobUpdate(){
+    @Test 
+    fun useJobUpdate(){
         Log.i("ExampleInstrumentedTest","run useJobUpdate use context start")
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        // CoroutineScope(Dispatchers.IO).launch {
-        //     // try {
-        //     //     AppUpdater(appContext)
-        //     //         //.setUpdateFrom(UpdateFrom.GITHUB)
-        //     //         //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
-        //     //         .setUpdateFrom(UpdateFrom.JSON)
-        //     //         .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-        //     //         .start()
-        //     // } catch (e: Exception) {
-        //     //     Log.i("ExampleInstrumentedTest","run useJobUpdate use context error")
-        //     //     // Log the error
-        //     //     //e.printStackTrace()
-        //     //     // Show a toast message with error information
-        //     //     //Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
-        //     // }
-        //     Thread.sleep(20000)
-        //     Log.i("ExampleInstrumentedTest","run useJobUpdate use context end")
-        // }
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                AppUpdater(appContext)
+                    //.setUpdateFrom(UpdateFrom.GITHUB)
+                    //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
+                    .setUpdateFrom(UpdateFrom.JSON)
+                    .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+                    .start()
+            } catch (e: Exception) {
+                Log.i("ExampleInstrumentedTest","run useJobUpdate use context error")
+                // Log the error
+                //e.printStackTrace()
+                // Show a toast message with error information
+                Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+            Thread.sleep(20000)
+            Log.i("ExampleInstrumentedTest","run useJobUpdate use context end")
+        }
         Thread.sleep(30000)
         Log.i("ExampleInstrumentedTest","run useJobUpdate use context end2")
     }
