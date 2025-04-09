@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 // Log the error
                 //e.printStackTrace()
                 // Show a toast message with error information
-                Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }
