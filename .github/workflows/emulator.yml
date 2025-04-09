@@ -96,7 +96,7 @@ jobs:
                 chmod +x ./gradlew
                 adb logcat -c 
                 #./gradlew connectedCheck --info
-                ( ./gradlew connectedAndroidTest --info > ./long_log/log_test.txt && pkill adb || pkill adb ) & 
+                ( ./gradlew connectedAndroidTest --info > ./long_log/log_test.txt && pkill adb || (pkill adb  && exit 343) ) & 
                 (adb logcat *:V -v time > ./long_log/logcat.txt || echo "adb pkill ocurr" )
                 wait
                 #./gradlew assembleAndroidTest
