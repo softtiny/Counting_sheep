@@ -23,19 +23,32 @@ def get_artifacts () {
     let artifact = $artifacts | get 0
     let archive_download_url = $artifact | get "archive_download_url"
     print $archive_download_url
-    curl -L $archive_download_url -o build/output.zip
-    # ( curl -L 
-    # -H "Accept: application/vnd.github+json"
-    # -H "Authorization: Bearer $env."
-    # "https://api.github.com/repos/softtiny/Counting_sheep/actions/runs/$RUN_ID/artifacts")
+    curl -v -L -H $Authorization $archive_download_url -o build/output.zip
+    
 }
-def unzip(){
-    ^$env.7za ./build/output.zip
+def unzip () {
+    ^$env.a7z x -obuild ./build/output.zip
+}
+def open_log () {
+    start ./build/logcat.txt
+    start ./build/log_test.txt
+}
+
+def git_up () {
+    git add .
+    try {
+        git commit -m ":construction: Work in progress."
+    } catch {
+        print "nothing commit"
+    }
+    git push
 }
 
 def main () {
     print $Authorization
-    # get_artifacts
-    unzip
+    git_up
+    #get_artifacts
+    #unzip
+    #open_log
     echo "sadf"
 }
