@@ -43,13 +43,13 @@ class ExampleInstrumentedTest {
                 // // Log the error
                 // //e.printStackTrace()
                 // // Show a toast message with error information
-                // Toast.makeText(this, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(appContext, "Failed to check for updates: ${e.message}", Toast.LENGTH_LONG).show()
             }
             Thread.sleep(20000)
             Log.i("ExampleInstrumentedTest","run useJobUpdate use context end")
         }
-    //     // Thread.sleep(30000)
-    //     // Log.i("ExampleInstrumentedTest","run useJobUpdate use context end2")
+        Thread.sleep(30000)
+        Log.i("ExampleInstrumentedTest","run useJobUpdate use context end2")
     }
     // @Test 
     // fun useAppUpdate() {
