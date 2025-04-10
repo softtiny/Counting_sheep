@@ -44,10 +44,49 @@ def git_up () {
     git push
 }
 
+def check_run () {
+    let res = ( curl -L 
+    -H "Accept: application/vnd.github+json"
+    -H $Authorization
+    "https://api.github.com/repos/softtiny/Counting_sheep/actions/runs?per_page=1")
+    let data = $res | from json
+    let workflow_runs = $data | get "workflow_runs"
+    let workflow = $workflow_runs | get 0
+    let status = $workflow | get status
+    $status
+}
+
+def check_run_loop () {
+    loop {
+        let status = ( check_run )
+        print $status
+        if $status == "completed" {
+            print "ok .........."
+        }
+        if $status == "queued" or $status == "in_progress" {
+            sleep 30sec
+        } else {
+            break
+        }
+    }
+}
+
+def run_job () {
+    ( 
+        curl -L
+        -H "Accept: application/vnd.github+json"
+        -H $Authorization
+        "https://api.github.com/repos/softtiny/Counting_sheep/actions/workflows/emulator.yml/dispatches" \
+            -d '{"ref":"main"}'
+    )
+}
+
 def main () {
     git_up
-    #get_artifacts
-    #unzip
-    #open_log
+    run_job
+    check_run_loop
+    get_artifacts
+    unzip
+    open_log
     echo "sadf"
 }
