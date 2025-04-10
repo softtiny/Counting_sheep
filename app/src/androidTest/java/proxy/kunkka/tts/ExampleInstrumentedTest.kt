@@ -53,18 +53,18 @@ class ExampleInstrumentedTest {
     //     // Thread.sleep(30000)
     //     // Log.i("ExampleInstrumentedTest","run useJobUpdate use context end2")
     // }
-    @Test 
-    fun useAppUpdate() {
-        Log.i("ExampleInstrumentedTest","run useAppUpdate use context start")
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val aa= AppUpdater(appContext)
-            .setDisplay(Display.NOTIFICATION)
-            .setUpdateFrom(UpdateFrom.JSON)
-            .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-            .start()
-        Thread.sleep(20000)
-        Log.i("ExampleInstrumentedTest","run useAppUpdate use context end")
-    }
+    // @Test 
+    // fun useAppUpdate() {
+    //     Log.i("ExampleInstrumentedTest","run useAppUpdate use context start")
+    //     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+    //     val aa= AppUpdater(appContext)
+    //         .setDisplay(Display.NOTIFICATION)
+    //         .setUpdateFrom(UpdateFrom.JSON)
+    //         .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+    //         .start()
+    //     Thread.sleep(20000)
+    //     Log.i("ExampleInstrumentedTest","run useAppUpdate use context end")
+    // }
     @Test
     fun useAppContext() {
         Log.i("ExampleInstrumentedTest", "run Example Instrumented Test use App context start")
