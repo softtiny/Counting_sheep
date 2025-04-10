@@ -8,6 +8,12 @@ def get_artifacts () {
     let data = $res | from json
     let workflow_runs = $data | get "workflow_runs"
     let workflow = $workflow_runs | get 0
+    let sha =  $workflow | get head_sha
+    print "######################################"
+    print $sha
+    print "git rev-parse HEAD"
+    git rev-parse HEAD
+    print "######################################"
     let run_id = $workflow | get id | into string
     print $run_id
     let url = "https://api.github.com/repos/softtiny/Counting_sheep/actions/runs/" + $run_id + "/artifacts";

@@ -19,6 +19,7 @@ import com.github.javiersantos.appupdater.objects.Update
 import com.github.javiersantos.appupdater.enums.AppUpdaterError
 
 import kotlinx.coroutines.*
+import android.widget.Toast
 
 /**
  * Instrumented test, which will execute on an Android device.
