@@ -72,13 +72,24 @@ def check_run_loop () {
 }
 
 def run_job () {
-    ( 
-        curl -L
-        -H "Accept: application/vnd.github+json"
-        -H $Authorization
-        "https://api.github.com/repos/softtiny/Counting_sheep/actions/workflows/emulator.yml/dispatches" \
-            -d '{"ref":"main"}'
-    )
+    let status = ( check_run )
+    print $status
+    if $status == "completed" {
+        print "ok .........."
+    }
+    if $status == "queued" or $status == "in_progress" {
+        print $status
+        print "busy status"    
+    } else {
+        ( 
+            curl -L
+            -H "Accept: application/vnd.github+json"
+            -H $Authorization
+            "https://api.github.com/repos/softtiny/Counting_sheep/actions/workflows/emulator.yml/dispatches"
+                -d '{"ref":"main"}'
+        )
+    }
+    
 }
 
 def main () {
