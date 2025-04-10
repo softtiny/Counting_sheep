@@ -23,6 +23,7 @@ def get_artifacts () {
     let artifact = $artifacts | get 0
     let archive_download_url = $artifact | get "archive_download_url"
     print $archive_download_url
+    curl -L $archive_download_url -o build/output.zip
     # ( curl -L 
     # -H "Accept: application/vnd.github+json"
     # -H "Authorization: Bearer $env."
