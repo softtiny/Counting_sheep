@@ -30,9 +30,9 @@ class ExampleInstrumentedTest {
     @Test 
     fun useJobUpdate() {
         Log.i("useJobUpdate"," run ok use job update")
-    //     // Log.i("ExampleInstrumentedTest","run useJobUpdate use context start")
-    //     // val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    //     // // CoroutineScope(Dispatchers.IO).launch {
+        Log.i("ExampleInstrumentedTest","run useJobUpdate use context start")
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        CoroutineScope(Dispatchers.IO).launch {
     //     // //     try {
     //     // //         AppUpdater(appContext)
     //     // //             //.setUpdateFrom(UpdateFrom.GITHUB)
@@ -49,7 +49,7 @@ class ExampleInstrumentedTest {
     //     // //     }
     //     // //     Thread.sleep(20000)
     //     // //     Log.i("ExampleInstrumentedTest","run useJobUpdate use context end")
-    //     // // }
+        }
     //     // Thread.sleep(30000)
     //     // Log.i("ExampleInstrumentedTest","run useJobUpdate use context end2")
     }
