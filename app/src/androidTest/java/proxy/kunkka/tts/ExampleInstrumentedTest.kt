@@ -27,9 +27,9 @@ import kotlinx.coroutines.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    // @Test 
-    // fun useJobUpdate() {
-    //     Log.i("useJobUpdate"," run ok use job update")
+    @Test 
+    fun useJobUpdate() {
+        Log.i("useJobUpdate"," run ok use job update")
     //     // Log.i("ExampleInstrumentedTest","run useJobUpdate use context start")
     //     // val appContext = InstrumentationRegistry.getInstrumentation().targetContext
     //     // // CoroutineScope(Dispatchers.IO).launch {
@@ -52,7 +52,7 @@ class ExampleInstrumentedTest {
     //     // // }
     //     // Thread.sleep(30000)
     //     // Log.i("ExampleInstrumentedTest","run useJobUpdate use context end2")
-    // }
+    }
     // @Test 
     // fun useAppUpdate() {
     //     Log.i("ExampleInstrumentedTest","run useAppUpdate use context start")
