@@ -35,11 +35,9 @@ class ExampleInstrumentedTest {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 AppUpdater(appContext)
-                //     //.setUpdateFrom(UpdateFrom.GITHUB)
-                //     //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
-                //     .setUpdateFrom(UpdateFrom.JSON)
-                //     .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
-                //     .start()
+                    .setUpdateFrom(UpdateFrom.JSON)
+                    .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
+                    .start()
             } catch (e: Exception) {
                 Log.i("ExampleInstrumentedTest","run useJobUpdate use context error")
                 // // Log the error
