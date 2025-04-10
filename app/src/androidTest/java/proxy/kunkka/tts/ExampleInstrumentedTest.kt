@@ -34,7 +34,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // AppUpdater(appContext)
+                AppUpdater(appContext)
                 //     //.setUpdateFrom(UpdateFrom.GITHUB)
                 //     //.setGitHubUserAndRepo("softtiny", "Counting_sheep")
                 //     .setUpdateFrom(UpdateFrom.JSON)
