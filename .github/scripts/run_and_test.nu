@@ -29,9 +29,13 @@ def get_artifacts () {
     # -H "Authorization: Bearer $env."
     # "https://api.github.com/repos/softtiny/Counting_sheep/actions/runs/$RUN_ID/artifacts")
 }
+def unzip(){
+    ^$env.7za ./build/output.zip
+}
 
 def main () {
     print $Authorization
-    get_artifacts
+    # get_artifacts
+    unzip
     echo "sadf"
 }
