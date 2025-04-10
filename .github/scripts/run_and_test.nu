@@ -18,7 +18,11 @@ def get_artifacts () {
         -H $Authorization
         $url
     )
-    print $res
+    let data = $res | from json
+    let artifacts = $data | get "artifacts"
+    let artifact = $artifacts | get 0
+    let archive_download_url = $artifact | get "archive_download_url"
+    print $archive_download_url
     # ( curl -L 
     # -H "Accept: application/vnd.github+json"
     # -H "Authorization: Bearer $env."
