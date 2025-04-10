@@ -58,6 +58,11 @@ def check_run () {
     let data = $res | from json
     let workflow_runs = $data | get "workflow_runs"
     let workflow = $workflow_runs | get 0
+    let created_at =  $workflow | get created_at | into datetime
+    let updated_at =  $workflow | get updated_at | into datetime
+    print $"created_at: ($created_at)" 
+    print $"updated_at: ($updated_at)" 
+    print $"diff: at ( $updated_at - $created_at  )"
     let status = $workflow | get status
     $status
 }
