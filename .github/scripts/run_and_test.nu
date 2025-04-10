@@ -45,7 +45,6 @@ def git_up () {
 }
 
 def main () {
-    print $Authorization
     git_up
     #get_artifacts
     #unzip
