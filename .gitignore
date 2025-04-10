@@ -15,3 +15,5 @@
 local.properties
 key.properties
 app/keystore.jks
+.env*
+!.env
