@@ -27,7 +27,7 @@ def get_artifacts () {
     
 }
 def unzip () {
-    ^$env.a7z x -ao -obuild ./build/output.zip
+    ^$env.a7z x -aoa -obuild ./build/output.zip
 }
 def open_log () {
     start ./build/logcat.txt
