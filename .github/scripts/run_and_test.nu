@@ -99,6 +99,7 @@ def run_job () {
             "https://api.github.com/repos/softtiny/Counting_sheep/actions/workflows/emulator.yml/dispatches"
                 -d '{"ref":"main"}'
         )
+        sleep 10sec
     }
     
 }
