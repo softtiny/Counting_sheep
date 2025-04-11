@@ -123,9 +123,8 @@ dependencies {
 
     implementation("com.github.softtiny03:AppUpdater:2.7.5") {
         exclude(group = "com.android.support")
-       
-        // exclude(module = "appcompat-v7")
-       exclude(module = "support-v4")
+        exclude(module = "appcompat-v7")
+        exclude(module = "support-v4")
     }
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
