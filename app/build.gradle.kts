@@ -103,6 +103,7 @@ tasks.withType<Test> {
 dependencies {
     // implementation 'com.github.javiersantos:AppUpdater:2.7'
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation("androidx.compose.runtime:runtime:1.6.0") // For LaunchedEffect and state management
@@ -122,9 +123,9 @@ dependencies {
 
     implementation("com.github.softtiny03:AppUpdater:2.7.5") {
         exclude(group = "com.android.support")
-        // java.lang.NoClassDefFoundError: Failed resolution of: Landroid/support/v7/app/AlertDialog$Builder;
+       
         // exclude(module = "appcompat-v7")
-        exclude(module = "support-v4")
+       // exclude(module = "support-v4")
     }
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
