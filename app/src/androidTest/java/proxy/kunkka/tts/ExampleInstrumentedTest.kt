@@ -35,7 +35,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         // Create a themed context to use with AppUpdater
         val themedContext = appContext.createConfigurationContext(appContext.resources.configuration)
-        themedContext.theme.applyStyle(R.style.Theme_Material_Light, true)
+        themedContext.theme.applyStyle(R.style.Theme_TTSGo, true)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
