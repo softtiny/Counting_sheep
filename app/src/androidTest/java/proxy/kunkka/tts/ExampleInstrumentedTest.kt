@@ -20,7 +20,6 @@ import com.github.javiersantos.appupdater.enums.AppUpdaterError
 
 import kotlinx.coroutines.*
 import android.widget.Toast
-import proxy.kunkka.tts.R
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -36,7 +35,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         // Create a themed context to use with AppUpdater
         val themedContext = appContext.createConfigurationContext(appContext.resources.configuration)
-        themedContext.theme.applyStyle(R.style.AppTheme, true)
+        themedContext.theme.applyStyle(R.style.Theme.TTSGo, true)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
