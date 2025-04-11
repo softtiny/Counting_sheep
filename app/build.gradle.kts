@@ -125,7 +125,7 @@ dependencies {
         exclude(group = "com.android.support")
        
         // exclude(module = "appcompat-v7")
-       // exclude(module = "support-v4")
+       exclude(module = "support-v4")
     }
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
