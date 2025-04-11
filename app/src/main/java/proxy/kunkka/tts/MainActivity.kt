@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import proxy.kunkka.tts.ui.theme.TTSGoTheme
+import androidx.compose.material3.MaterialTheme
 
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.UpdateFrom
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
                 selectedLanguage.value = textToSpeech.language // Get current language
                 // Set content after TTS initialization
                 setContent {
-                    TTSGoTheme {
+                    MaterialTheme {
                         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                             TTSContent(
                                 modifier = Modifier.padding(innerPadding),
