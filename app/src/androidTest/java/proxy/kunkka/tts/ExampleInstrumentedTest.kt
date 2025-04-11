@@ -34,12 +34,12 @@ class ExampleInstrumentedTest {
         Log.i("ExampleInstrumentedTest","run useJobUpdate use context start")
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         // Create a themed context to use with AppUpdater
-        val themedContext = appContext.createConfigurationContext(appContext.resources.configuration)
-        themedContext.theme.applyStyle(R.style.Theme_TTSGo, true)
+        // val themedContext = appContext.createConfigurationContext(appContext.resources.configuration)
+        // themedContext.theme.applyStyle(R.style.Theme_TTSGo, true)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                AppUpdater(themedContext)
+                AppUpdater(appContext)
                     .setUpdateFrom(UpdateFrom.JSON)
                     .setUpdateJSON("https://github.com/softtiny/Counting_sheep/releases/latest/download/update-changelog.json")
                     .start()
