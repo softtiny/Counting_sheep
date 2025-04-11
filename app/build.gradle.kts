@@ -122,7 +122,8 @@ dependencies {
 
     implementation("com.github.softtiny03:AppUpdater:2.7.5") {
         exclude(group = "com.android.support")
-        exclude(module = "appcompat-v7")
+        // java.lang.NoClassDefFoundError: Failed resolution of: Landroid/support/v7/app/AlertDialog$Builder;
+        // exclude(module = "appcompat-v7")
         exclude(module = "support-v4")
     }
 
